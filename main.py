@@ -17,17 +17,18 @@ def main():
     frequency_parts = [30, 200]
     x = generate_sparse_signal(0.1, n / 0.1, frequency_parts)
 
-    method = 'bernoulli' # 'bernoulli', 'gaussian' or 'equidistant'
+    sensing = 'bernoulli' # 'bernoulli', 'gaussian' or 'equidistant'
+    method = 'basis_pursuit' # 'basis_pursuit' or 'lasso'
 
     x_freq = perform_dct(x)
 
     for m_percentage in m_percentage_values:
         m = int(m_percentage / 100 * n)
 
-        phi, mask = generate_measurement_matrix(n, m, matrix_type=method)
+        phi, mask = generate_measurement_matrix(n, m, matrix_type=sensing)
         z, theta = perform_compressed_sensing_measurement(phi, x_freq)
 
-        x_rec = reconstruct_signal(theta, z)
+        x_rec = reconstruct_signal(theta, z, method=method)
 
         error = mse(x, x_rec)
         error_values.append(error)
