@@ -38,17 +38,20 @@ phi, measurements_indices = generate_measurement_matrix(n, m, matrix_type='berno
 z, theta = perform_compressed_sensing_measurement(phi, signal_freq)
 
 # reconstruct the signal
-reconstructed_signal = reconstruct_signal(theta, z)
+signal_rec = reconstruct_signal(theta, z)
 
 # calculate the Mean Square Error (MSE) between the original and reconstructed signals
-error = mse(signal, reconstructed_signal)
+error = mse(signal, signal_rec)
 ```
 
 This package also includes functions for visualizing the original and reconstructed signals, as well as the errors:
 
 ```python
-plot_original_signal(np.linspace(0, duration, len(signal)), signal, measurements_indices=measurements_indices)
-plot_reconstructed_signal(np.linspace(0, duration, len(reconstructed_signal)), reconstructed_signal)
+t = np.linspace(0, duration, len(signal))
+
+# plot the original and reconstructed signals
+plot_original_signal(t, signal, measurements_indices=measurements_indices)
+plot_reconstructed_signal(t, signal_rec)
 ```
 
 ## License

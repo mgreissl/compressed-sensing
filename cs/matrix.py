@@ -35,12 +35,12 @@ def generate_measurement_matrix(n, m, matrix_type='bernoulli'):
     else:
         raise ValueError("Invalid matrix_type. Expected 'bernoulli', 'gaussian' or 'equidistant'.")
 
-def perform_compressed_sensing_measurement(Phi, x_freq, noise=False):
+def perform_compressed_sensing_measurement(phi, x_freq, noise=False):
     """
     This function performs compressed sensing measurement on a given signal.
 
     Parameters:
-    - Phi: ndarray, the measurement matrix.
+    - phi: ndarray, the measurement matrix.
     - x_freq: ndarray, the frequency domain representation of the signal to measure.
     - noise: bool (optional), if True, adds Gaussian noise to the measurements. Default is False.
 
@@ -48,12 +48,39 @@ def perform_compressed_sensing_measurement(Phi, x_freq, noise=False):
     - z: ndarray, the compressed sensing measurements.
     - theta: ndarray, the combined measurement and transform matrix.
     """
-    psi = dct(np.identity(Phi.shape[1]), axis=0)  # Calculate the Discrete Cosine Transform matrix.
-    theta = Phi @ psi  # Compute the combined measurement and transform matrix.
+    psi = dct(np.identity(phi.shape[1]), axis=0)  # Calculate the Discrete Cosine Transform matrix.
+    theta = phi @ psi  # Compute the combined measurement and transform matrix.
     z = theta @ x_freq  # Perform the compressed sensing measurement.
 
     if noise:
-        m = Phi.shape[0]
+        m = phi.shape[0]
         z += np.random.randn(m) / np.sqrt(m)  # noise with standard deviation 1/sqrt(m)
 
     return z, theta
+
+def coherence(matrix):
+    """
+    This function calculates the coherence of a given matrix.
+
+    Parameters:
+    - matrix: ndarray, the input matrix.
+
+    Returns:
+    - mu: float, the coherence of the input matrix.
+    """
+    n = matrix.shape[1]
+    mu = 0
+
+    # Normalize the columns of the matrix
+    matrix_normalized = matrix / np.linalg.norm(matrix, axis=0)
+
+    for i in range(n):
+        for j in range(i+1, n):
+            # Calculate the absolute inner product of columns i and j
+            inner_product = np.abs(np.inner(matrix_normalized[:, i], matrix_normalized[:, j]))
+
+            # Update maximum inner product if necessary
+            if inner_product > mu:
+                mu = inner_product
+
+    return mu
