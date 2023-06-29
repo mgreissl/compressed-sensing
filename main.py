@@ -24,7 +24,7 @@ def main():
     for m_percentage in m_percentage_values:
         m = int(m_percentage / 100 * n)
 
-        phi, perm = generate_measurement_matrix(n, m, matrix_type=method)
+        phi, mask = generate_measurement_matrix(n, m, matrix_type=method)
         z, theta = perform_compressed_sensing_measurement(phi, x_freq)
 
         x_rec = reconstruct_signal(theta, z)
@@ -32,7 +32,7 @@ def main():
         error = mse(x, x_rec)
         error_values.append(error)
 
-        plot_original_signal(t, x, perm, savefig=f'figures/original_signal_{m_percentage}.pdf')
+        plot_original_signal(t, x, mask, savefig=f'figures/original_signal_{m_percentage}.pdf')
         plot_reconstructed_signal(t, x_rec, savefig=f'figures/reconstructed_signal_{m_percentage}.pdf')
 
     plot_error_values(m_percentage_values, error_values, savefig=f'figures/error_{method}.pdf')

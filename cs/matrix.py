@@ -13,13 +13,14 @@ def generate_measurement_matrix(n, m, matrix_type='bernoulli'):
 
     Returns:
     - phi: ndarray, the generated measurement matrix.
-    - perm: ndarray or None, permutation vector used for the 'bernoulli' matrix. None for the other types.
+    - mask: ndarray or None, mask vector used for the 'bernoulli' matrix. None for the other types.
     """
     if matrix_type == 'bernoulli':
+        p = m / n
+        mask = np.random.binomial(1, p, size=n).astype(np.bool_)
         phi = np.identity(n)
-        perm = np.random.permutation(n)[:m]
-        phi = phi[perm, :]
-        return phi, perm
+        phi = phi[mask]
+        return phi, mask
 
     elif matrix_type == 'gaussian':
         phi = np.random.randn(m, n) / np.sqrt(m)
@@ -48,9 +49,9 @@ def perform_compressed_sensing_measurement(phi, x_freq, noise=False):
     - z: ndarray, the compressed sensing measurements.
     - theta: ndarray, the combined measurement and transform matrix.
     """
-    psi = dct(np.identity(phi.shape[1]), axis=0)  # Calculate the Discrete Cosine Transform matrix.
-    theta = phi @ psi  # Compute the combined measurement and transform matrix.
-    z = theta @ x_freq  # Perform the compressed sensing measurement.
+    psi = dct(np.identity(phi.shape[1]), axis=0)  # calculate the Discrete Cosine Transform matrix.
+    theta = phi @ psi  # compute the combined measurement and transform matrix.
+    z = theta @ x_freq  # perform the compressed sensing measurement.
 
     if noise:
         m = phi.shape[0]
@@ -71,15 +72,15 @@ def coherence(matrix):
     n = matrix.shape[1]
     mu = 0
 
-    # Normalize the columns of the matrix
+    # normalize the columns of the matrix
     matrix_normalized = matrix / np.linalg.norm(matrix, axis=0)
 
     for i in range(n):
         for j in range(i+1, n):
-            # Calculate the absolute inner product of columns i and j
+            # calculate the absolute inner product of columns i and j
             inner_product = np.abs(np.inner(matrix_normalized[:, i], matrix_normalized[:, j]))
 
-            # Update maximum inner product if necessary
+            # update maximum inner product if necessary
             if inner_product > mu:
                 mu = inner_product
 
