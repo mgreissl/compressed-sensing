@@ -30,3 +30,6 @@ for i, m_percentage in enumerate(m_percentage_values):
         error_values[i, j] = error
 
 plot_error_heatmap(m_percentage_values, sparsity_values, error_values, savefig='figures/error_heatmap.pdf')
+
+# save the data
+np.save('data/error_heatmap.npy', error_values)
