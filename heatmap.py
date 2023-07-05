@@ -17,11 +17,11 @@ for i, m_percentage in enumerate(m_percentage_values):
 
     for j, sparsity in enumerate(sparsity_values):
         frequency_parts = np.random.choice(range(1, 200), sparsity, replace=False)
-        x, t = generate_sparse_signal(0.1, n / 0.1, frequency_parts)
+        x = generate_sparse_signal(0.1, n / 0.1, frequency_parts)
 
         x_freq = perform_dct(x)
 
-        phi = generate_measurement_matrix(n, m)
+        phi, _ = generate_measurement_matrix(n, m)
         z, theta = perform_compressed_sensing_measurement(phi, x_freq)
 
         x_rec = reconstruct_signal(theta, z)

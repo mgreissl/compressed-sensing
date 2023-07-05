@@ -18,7 +18,7 @@ def main():
     x = generate_sparse_signal(0.1, n / 0.1, frequency_parts)
 
     sensing = 'bernoulli' # 'bernoulli', 'gaussian' or 'equidistant'
-    method = 'basis_pursuit' # 'basis_pursuit' or 'lasso'
+    method = 'basis_pursuit' # 'basis_pursuit', 'lasso' or 'omp'
 
     x_freq = perform_dct(x)
 
