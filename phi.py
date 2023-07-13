@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from scipy.fft import dct
-from cs.optimization import reconstruct_signal
+from cs.reconstruct import reconstruct_signal
 from cs.signal import generate_sparse_signal, mse
-from cs.matrix import generate_measurement_matrix, perform_compressed_sensing_measurement
-from cs.plotting import TUMRed, TUMOrange, TUMGreen
+from cs.matrix import generate_measurement_matrix, perform_compressed_sensing_measurement, coherence
+from cs.plotting import TUMRed, TUMOrange, TUMGreen, TUMBlue
 
 np.random.seed(420)  # set seed for reproducibility
 
@@ -50,11 +50,11 @@ m_percentage = np.array(m_values) / n * 100
 
 # create an error plot
 plt.figure(figsize=(10, 6))
-plt.plot(m_percentage, error_values_bernoulli, color=TUMRed, marker='o', label='MSE (Bernoulli)', linewidth=1.5)
-plt.plot(m_percentage, error_values_gaussian, color=TUMOrange, marker='s', label='MSE (Gaussian)', linewidth=1.5)
-plt.plot(m_percentage, error_values_equidistant, color=TUMGreen, marker='^', label='MSE (Deterministic)', linewidth=1.5)
-plt.xlabel('Measurements in % of the sample size')
-plt.ylabel('Logarithmic error')
+plt.plot(m_percentage, error_values_bernoulli, color=TUMRed, marker='o', label='Bernoulli', linewidth=1.5)
+plt.plot(m_percentage, error_values_gaussian, color=TUMOrange, marker='s', label='Gaussian', linewidth=1.5)
+plt.plot(m_percentage, error_values_equidistant, color=TUMGreen, marker='^', label='Deterministic', linewidth=1.5)
+plt.xlabel('Measurements in % of the Sample Size')
+plt.ylabel('Logarithmic Error')
 # set y-axis to log scale
 plt.yscale('log')
 # format x-axis labels as percentages
