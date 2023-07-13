@@ -1,6 +1,6 @@
 import numpy as np
 from cs.plotting import plot_error_heatmap
-from cs.optimization import reconstruct_signal
+from cs.reconstruct import reconstruct_signal
 from cs.signal import generate_sparse_signal, mse, perform_dct
 from cs.matrix import generate_measurement_matrix, perform_compressed_sensing_measurement
 

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from scipy.fft import dct, idct
 from cs.signal import generate_sparse_signal, mse
-from cs.optimization import lasso
+from cs.reconstruct import lasso
 from cs.matrix import generate_measurement_matrix, perform_compressed_sensing_measurement
 from cs.plotting import TUMRed, TUMOrange, TUMGreen
 
@@ -45,11 +45,11 @@ m_percentage = np.array(m_values) / n * 100
 
 # create an error plot
 plt.figure(figsize=(10, 6))
-plt.plot(m_percentage, error_values_1, color=TUMRed, marker='o', label=r'$\alpha=1$', linewidth=1.5)
-plt.plot(m_percentage, error_values_5, color=TUMOrange, marker='s', label=r'$\alpha=5$', linewidth=1.5)
-plt.plot(m_percentage, error_values_10, color=TUMGreen, marker='^', label=r'$\alpha=10$', linewidth=1.5)
-plt.xlabel('Measurements in % of the sample size')
-plt.ylabel('Logarithmic error')
+plt.plot(np.load('data/error_comp_alpha.npy')[0], np.load('data/error_comp_alpha.npy')[1], color=TUMRed, marker='o', label=r'$\alpha=1$', linewidth=1.5)
+plt.plot(np.load('data/error_comp_alpha.npy')[0], np.load('data/error_comp_alpha.npy')[2], color=TUMOrange, marker='s', label=r'$\alpha=5$', linewidth=1.5)
+plt.plot(np.load('data/error_comp_alpha.npy')[0], np.load('data/error_comp_alpha.npy')[3], color=TUMGreen, marker='^', label=r'$\alpha=10$', linewidth=1.5)
+plt.xlabel('Measurements in % of the Sample Size')
+plt.ylabel('Logarithmic Error')
 # set y-axis to log scale
 plt.yscale('log')
 # format x-axis labels as percentages

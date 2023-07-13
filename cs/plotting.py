@@ -27,7 +27,7 @@ def plot_original_signal(t, signal, measurements_indices=None, savefig=None):
         plt.scatter(t[measurements_indices], signal[measurements_indices], color=TUMRed, marker='x', label='Measurements')
     plt.xlabel('Time')
     plt.ylabel('Amplitude')
-    plt.legend()
+    plt.legend(loc='upper right')
     plt.tight_layout()
     if savefig:
         plt.savefig(savefig)
@@ -47,7 +47,7 @@ def plot_reconstructed_signal(t, signal, savefig=None):
     plt.plot(t, signal, color=TUMBlue, label='Reconstructed Signal', linewidth=1.5)
     plt.xlabel('Time')
     plt.ylabel('Amplitude')
-    plt.legend()
+    plt.legend(loc='upper right')
     plt.tight_layout()
     if savefig:
         plt.savefig(savefig)
@@ -65,12 +65,12 @@ def plot_error_values(m_percentage_values, error_values, savefig=None):
     """
     plt.figure(figsize=(10, 6))
     plt.plot(m_percentage_values, error_values, color=TUMRed, marker='o', label='MSE', linewidth=1.5)
-    plt.xlabel('Measurements (percent of the sample size)')
-    plt.ylabel('Error')
+    plt.xlabel('Measurements in % of the Sample Size')
+    plt.ylabel('Logarithmic Error')
     plt.yscale('log')
     ax = plt.gca()
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: f'{x:.0f}%'))
-    plt.legend()
+    plt.legend(loc='upper right')
     plt.tight_layout()
     if savefig:
         plt.savefig(savefig)
@@ -94,7 +94,7 @@ def plot_error_heatmap(m_percentage_values, sparsity_values, error_values, savef
     plt.yticks(np.arange(len(m_percentage_values)), [f'{val}%' for val in m_percentage_values])
     plt.ylabel('Measurements')
     cbar = plt.colorbar()
-    cbar.set_label('Logarithmic error')
+    cbar.set_label('Logarithmic Error')
     cbar.set_ticks([0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1])
     plt.tight_layout()
     if savefig:

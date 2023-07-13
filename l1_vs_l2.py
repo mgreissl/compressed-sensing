@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from cs.optimization import basis_pursuit
+from cs.reconstruct import basis_pursuit
 from cs.plotting import TUMBlue
 
 np.random.seed(420)  # set seed for reproducibility

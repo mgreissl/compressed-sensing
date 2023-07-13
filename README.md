@@ -4,15 +4,15 @@ This Python package provides a set of utilities for working with compressed sens
 
 The package includes methods for generating sparse signals, creating different types of measurement matrices (Bernoulli, Gaussian, Equidistant), and reconstructing signals using basis pursuit. Additionally, it also provides a set of functions to visualize signals and errors with plotting functionalities.
 
-This code was used to generate the figures and results in my thesis titled "Compressive Sensing - Theory and Applications".
+This code was used to generate the figures and results in my thesis titled "Compressed Sensing - Theory and Application".
 
 ## Getting Started
 
 You can install this package by cloning the repository to your local machine:
 
 ```bash
-git clone https://github.com/mgreissl/compressive-sensing.git
-cd compressive-sensing
+git clone https://github.com/mgreissl/compressed-sensing.git
+cd compressed-sensing
 ```
 
 ## Example

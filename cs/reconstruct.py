@@ -85,13 +85,13 @@ def omp(theta, z, tol=1e-16, max_iter=100):
     residual = z.copy()
     support = []
 
-    for _ in range(max_iter):
+    for k in range(max_iter):
         # (i) find index with maximum correlation
         correlations = theta.T @ residual
-        l = np.argmax(np.abs(correlations))
+        i = np.argmax(np.abs(correlations))
 
         # (ii) update support set
-        support.append(l)
+        support.append(i)
 
         # (iii) perform least squares on theta[:, support]
         y_hat = np.zeros(theta.shape[1])
